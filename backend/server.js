@@ -11,9 +11,8 @@ app.listen(process.env.PORT, () => {
     console.log("test working",process.env.PORT);
 });    
 
-app.use((err,req,res,next) => {
+app.use((req,res,next) => { 
     console.log(req.path, req.method);
-    console.error(err.stack)
     next();
 });
 
