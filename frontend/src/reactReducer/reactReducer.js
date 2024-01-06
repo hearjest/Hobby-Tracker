@@ -12,9 +12,10 @@ export function hobbyReducer(hobby_state, action){
     }else if(action.type === 'init_hobbies_state'){
         return action.payload;
     }else if(action.type === 'add_hobby'){  
-        return [...hobby_state,(async (e) => {
-            e.preventDefault();
-            console.log('HELP')
+        console.log("SAVE ME WORK PLEASE")
+        console.log(action);
+        const result = async () => {
+            console.log("HELP")
             const reqBody={
                 id:action.user_id,
                 title:action.title,
@@ -22,13 +23,13 @@ export function hobbyReducer(hobby_state, action){
                 schedule:"{\"Monday\":\"10-5\"}",
                 catergory:action.catergory
             }
-            console.log(reqBody);
+            console.log(JSON.stringify(reqBody));
             const response = await fetch('/api/entries/newHobby',{
                 method:"POST",
                 body:JSON.stringify(reqBody),
                 headers:{
-                    "Content-Type":'application/json'
-                }
+                    "Content-Type":'application/json',
+                },
             });
 
             const json= await response.json();
@@ -38,6 +39,7 @@ export function hobbyReducer(hobby_state, action){
                 console.log(json);
                 return [json.data];
             }
-        })]
+        };
+        return [...hobby_state, result()];
     }
 }

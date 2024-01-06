@@ -20,7 +20,7 @@ function Hobby({hobby,onChange,onDelete}){
                 })
             }
             } />
-            <button onClick={() => setEditMode(false)}>Save Title</button>
+            <button onClick={() => {setEditMode(false)}}>Save Title</button>
         </>);
     }else{
         content = (<>

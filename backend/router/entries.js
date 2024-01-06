@@ -28,6 +28,8 @@ router.post('/newUser',async (req,res) => {//Make USER
 
 router.post('/newHobby',async (req,res) => {//Make HOBBY
     const {id,title,streak,schedule,catergory} = req.body;
+    console.log("test");
+    console.log(req.body)
     try{
         const result = await db.createHobby(id,title,streak,schedule,catergory);
         res.status(200).send(result);
@@ -37,7 +39,7 @@ router.post('/newHobby',async (req,res) => {//Make HOBBY
 });
 
 router.delete('/deleteHobby/:id',async (req,res) => {
-    const {id} = req.params;
+    const {id} = req.body;
     try{
         const result = await db.deleteHobby(id);
         res.status(200).json(result);

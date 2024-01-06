@@ -9,7 +9,7 @@ export default function HobbyCreateForm({onSubmitHobby}){//Reform based on a wee
             <h4>Enter information about hobby</h4>
             <label for="title">Name of hobby</label>
             <br/> 
-            <input type="text" onChange={(e) => setTitle(e.target.value)} value = {title}id="title" name="title">
+            <input type="text" onChange={(e) => setTitle(e.target.value)} value = {title} id="title" name="title">
             </input>
             <br/>
             <label for="catergory">Name of catergory</label>

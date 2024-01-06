@@ -3,14 +3,14 @@ import NavBar from './navBar.js';
 import HobbyInfoCards from './hobbyInfoCard.js';
 import { hobbyReducer } from '../reactReducer/reactReducer.js';
 import HobbyCreateForm from './HobbyCreateForm.js';
+
 export default function HomePage(){
     const [hobbies,dispatch] = useReducer(hobbyReducer,null);
 
     useEffect(() => {
         async function fetchData(){
-            const response = await fetch('/api/entries/getHobbies/18');
+            const response = await fetch('/api/entries/getHobbies/18');//HELPPPPPPPPP
             const json = await response.json();
-            
             if(response.ok){
                 dispatch({
                     type:'init_hobbies_state',

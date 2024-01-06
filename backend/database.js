@@ -16,23 +16,22 @@ async function getUser(email,password){
 };
 
 async function getHobbies(user_id){
-    const result = await connection.query('SELECT * FROM hobby WHERE user_id = ?',user_id,function(err,result,fields){
-        if (err){
-            throw new Error("invalid")
-        }
+    try {
+        const result = await connection.query('SELECT * FROM hobby WHERE user_id = ?', user_id);
         return result;
-        });
-        return result;
+    } catch (err) {
+        throw new Error("invalid");
+    }
 };
 
 async function createHobby(user_id,title,streak,schedule,catergory){// To do: validate title, streak, schedule
-    const result = await connection.query('INSERT INTO hobby (user_id,title,streak,schedule,catergory) VALUES (?,?,?,?,?)',[user_id,title,streak,schedule,catergory],function(err,result,fields){
+    console.log(title)
+    const result1 = await connection.query('INSERT INTO hobby (user_id,title,streak,schedule,catergory) VALUES (?,?,?,?,?)',[user_id,title,streak,schedule,catergory],function(err,result,fields){
         if (err){
             throw new Error("how did you mess up this badly man")
         }
-        return result;
         });
-        return result;
+    return result1;
 };
 
 async function deleteHobby(hobby_id){// To do: validate title, streak, schedule
@@ -51,7 +50,7 @@ async function updateHobby(hobby_id, title,streak,schedule,catergory){// To do: 
         }
         return result;
         });
-        return result;
+    return result;
 };
 
 async function createUser(username,email,password){
