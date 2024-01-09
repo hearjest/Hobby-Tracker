@@ -28,8 +28,6 @@ router.post('/newUser',async (req,res) => {//Make USER
 
 router.post('/newHobby',async (req,res) => {//Make HOBBY
     const {id,title,streak,schedule,catergory} = req.body;
-    console.log("test");
-    console.log(req.body)
     try{
         const result = await db.createHobby(id,title,streak,schedule,catergory);
         res.status(200).send(result);
@@ -63,6 +61,16 @@ router.get('/getHobbies/:id',async (req,res) => {
     const {id} = req.params;
     try{
         const [result] = await db.getHobbies(id);
+        res.status(200).json(result);
+    } catch(err){
+        res.status(400).json({err: err.message})
+    }
+})
+
+router.get('/getHobbiesByInsertId/:id',async (req,res) => {
+    const {id} = req.params;
+    try{
+        const [result] = await db.getHobbiesByInsertID(id);
         res.status(200).json(result);
     } catch(err){
         res.status(400).json({err: err.message})

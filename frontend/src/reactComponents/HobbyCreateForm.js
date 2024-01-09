@@ -5,7 +5,7 @@ export default function HobbyCreateForm({onSubmitHobby}){//Reform based on a wee
     const [catergory,setCatergory] = useState(''); 
 
     return(
-        <form class="hobbyForm" onSubmit={(e) => {e.preventDefault(); onSubmitHobby('18', title, catergory)}}>
+        <form class="hobbyForm" onSubmit={ async (e) => {e.preventDefault(); return await onSubmitHobby('18', title, catergory);}}>
             <h4>Enter information about hobby</h4>
             <label for="title">Name of hobby</label>
             <br/> 

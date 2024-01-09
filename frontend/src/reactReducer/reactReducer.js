@@ -11,35 +11,9 @@ export function hobbyReducer(hobby_state, action){
         return hobby_state.filter((hobby) => hobby.id !== action.id); //MUST CHANGE MYSQL DATABASE
     }else if(action.type === 'init_hobbies_state'){
         return action.payload;
-    }else if(action.type === 'add_hobby'){  
-        console.log("SAVE ME WORK PLEASE")
-        console.log(action);
-        const result = async () => {
-            console.log("HELP")
-            const reqBody={
-                id:action.user_id,
-                title:action.title,
-                streak:"0",
-                schedule:"{\"Monday\":\"10-5\"}",
-                catergory:action.catergory
-            }
-            console.log(JSON.stringify(reqBody));
-            const response = await fetch('/api/entries/newHobby',{
-                method:"POST",
-                body:JSON.stringify(reqBody),
-                headers:{
-                    "Content-Type":'application/json',
-                },
-            });
-
-            const json= await response.json();
-            if(!response.ok){
-                return new Error("Something went wrong");
-            }else{
-                console.log(json);
-                return [json.data];
-            }
-        };
-        return [...hobby_state, result()];
+    }else if(action.type === 'add_hobby'){ 
+        console.log("pls")
+        console.log(action.hobby[0])
+        return [...hobby_state, action.hobby[0]];
     }
 }

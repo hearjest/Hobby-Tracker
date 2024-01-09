@@ -9,7 +9,7 @@ export default function HomePage(){
 
     useEffect(() => {
         async function fetchData(){
-            const response = await fetch('/api/entries/getHobbies/18');//HELPPPPPPPPP
+            let response = await fetch('http://localhost:4000/api/entries/getHobbies/18');
             const json = await response.json();
             if(response.ok){
                 dispatch({
@@ -35,16 +35,46 @@ export default function HomePage(){
         });
     }
 
-    function handleHobbyEntrySubmit(user_id,title,catergory){
+    async function handleHobbyEntrySubmit(user_id,title,catergory){
+        const result = async ()=>{
+            const reqBody={
+                id:user_id,
+                title:title,
+                streak:"0",
+                schedule:"{\"Monday\":\"10-5\"}",
+                catergory:catergory
+            }
+            const response = await fetch('http://localhost:4000/api/entries/newHobby',{
+                method:"POST",
+                body:JSON.stringify(reqBody),
+                headers:{
+                    "Content-Type":'application/json',
+                },
+            });
+            if(!response.ok){
+                return new Error("Something went wrong");
+            }
+            let json=await response.json();
+
+            let hobbyReq=await fetch(('http://localhost:4000/api/entries/getHobbiesByInsertId/'+(json[0].insertId)));
+            if(!response.ok){
+                return new Error("Something went wrong");
+            }else{
+                return await hobbyReq.json()
+            }  
+        };
+        
+        let num=await result();
         dispatch({
             type:'add_hobby',
             user_id:user_id,
             title:title,
             catergory:catergory,
+            hobby:num
         });
     }
 
-
+    
 
     return(
     <>
@@ -52,10 +82,9 @@ export default function HomePage(){
         <div class="container">
             <div class="sideBar"><HobbyCreateForm onSubmitHobby={handleHobbyEntrySubmit}/></div>
             <div class="hobbyCardContainer">
-                {hobbies&&hobbies.map((hobbies)=>
+                {hobbies&&hobbies.map(hobbies=>
                     (<HobbyInfoCards key={hobbies.id} hobbies={hobbies} onChangeHobby={handleHobbyChange} onDeleteHobby={handleHobbyDeletion}/> ))}
             </div>
-            
         </div>
     </>
     );

@@ -24,8 +24,17 @@ async function getHobbies(user_id){
     }
 };
 
+async function getHobbiesByInsertID(insertID){
+    try {
+        const result = await connection.query('SELECT * FROM hobby WHERE id = ?', insertID);
+        console.log('HELP')
+        return result;
+    } catch (err) {
+        throw new Error("invalid");
+    }
+};
+
 async function createHobby(user_id,title,streak,schedule,catergory){// To do: validate title, streak, schedule
-    console.log(title)
     const result1 = await connection.query('INSERT INTO hobby (user_id,title,streak,schedule,catergory) VALUES (?,?,?,?,?)',[user_id,title,streak,schedule,catergory],function(err,result,fields){
         if (err){
             throw new Error("how did you mess up this badly man")
@@ -62,7 +71,7 @@ async function createUser(username,email,password){
     return result;
 };
 
-module.exports = {createUser,createHobby,getUser,updateHobby,deleteHobby,getHobbies};
+module.exports = {createUser,createHobby,getUser,updateHobby,deleteHobby,getHobbies,getHobbiesByInsertID};
 
 
 /*
